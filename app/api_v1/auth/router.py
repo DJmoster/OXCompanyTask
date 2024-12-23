@@ -16,6 +16,7 @@ from .schemas import (
     AuthSchema,
     AuthUpdate,
     AuthUpdateResponse,
+    AuthCreate,
 )
 from .service import AuthService
 
@@ -82,3 +83,15 @@ async def delete_employee_auth(
     _service = AuthService(cursor)
 
     return await _service.delete_by_employee_id(employee_id)
+
+
+@router.post("/employees/{employee_id}/renew")
+@role_requiered([AuthRole.ADMIN])
+async def renew_employee_auth_password(
+    cursor: Annotated[RealDictCursor, Depends(db_helper.cursor_dependency)],
+    current_user: Annotated[AuthSchema, Depends(get_current_auth_user)],
+    employee_id: int,
+) -> AuthCreate:
+    _service = AuthService(cursor)
+
+    return await _service.renew_employee_password(employee_id)

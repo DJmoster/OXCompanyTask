@@ -19,6 +19,7 @@ from .exceptions import (
     USER_NOT_ACTIVE_EXCEPTION,
     USER_CREDENTIALS_ALREARY_CREATED_EXCEPTION,
     USER_NOT_FOUND_EXCEPTION,
+    USER_NOT_PERMITTED_EXCEPTION,
 )
 
 
@@ -91,3 +92,19 @@ class AuthService(Base):
 
     async def delete_by_employee_id(self, employee_id: int) -> None:
         self.__auth_repository.delete_by_employee_id(employee_id)
+
+    async def renew_employee_password(self, employee_id: int) -> AuthCreate:
+        password = generate_random_password()
+        auth_record = self.__auth_repository.update_password_by_employee_id(
+            employee_id, password
+        )
+
+        if auth_record is None:
+            raise USER_NOT_PERMITTED_EXCEPTION
+
+        return AuthCreateResponse.model_validate(
+            {
+                "password": password,
+                **auth_record.model_dump(exclude=("password",)),
+            }
+        )

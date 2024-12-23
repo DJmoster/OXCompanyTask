@@ -93,6 +93,23 @@ class AuthRepository(BaseRepository):
             id_field="employee_id",
         )
 
+    def update_password_by_employee_id(self, obj_id: int, password: str) -> AuthSchema:
+        query = """
+        UPDATE auth 
+        SET password = %s
+        WHERE employee_id = %s 
+        RETURNING *
+        """
+
+        return super()._excecute_query_with_result(
+            query=query,
+            variables=(
+                hash_password(password),
+                obj_id,
+            ),
+            schema=AuthSchema,
+        )
+
     def delete_by_id(self, obj_id: int) -> None:
         raise NotImplementedError
 
