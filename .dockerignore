@@ -1,0 +1,3 @@
+.venv
+example.env
+poetry.lock

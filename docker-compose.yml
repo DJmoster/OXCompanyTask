@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  back:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=oxcompany_tech_task
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - TOKEN_SECRET_KEY = 2b2f48d3e039229a036e9d5638471f95a28027ea8102a4422a2b66f2921c5ac3
+      - TOKEN_EXPIRE_MINUTES = 120
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=oxcompany_tech_task
+
+volumes:
+  postgres_data:
