@@ -1,20 +1,24 @@
+from pathlib import Path
+
 from app.config import settings
 
 from app.database.database import db_helper
 
-from api_v1.employees.repository import EmployeeRepository
-from api_v1.employees.schemas import EmployeeCreate
+from app.api_v1.employees.repository import EmployeeRepository
+from app.api_v1.employees.schemas import EmployeeCreate
 from app.api_v1.employees.enums import EmployeePosition
 
-from api_v1.auth.repository import AuthRepository
-from api_v1.auth.schemas import AuthCreate
+from app.api_v1.auth.repository import AuthRepository
+from app.api_v1.auth.schemas import AuthCreate
 from app.api_v1.auth.enums import AuthRole
 
 
 class DatabaseUtils:
     @staticmethod
     def create_tables():
-        with open(settings.db.schema_dir, "r") as schema_file:
+        with open(
+            Path(__file__).parent / settings.db.schema_filename, "r"
+        ) as schema_file:
             cursor = db_helper.cursor
 
             cursor.execute(schema_file.read())

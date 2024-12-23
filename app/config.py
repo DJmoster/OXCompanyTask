@@ -12,7 +12,7 @@ class DataBaseSettings(BaseModel):
     name: str = getenv("DB_NAME")
     user: str = getenv("DB_USER")
     password: str = getenv("DB_PASSWORD")
-    schema_dir: str = "database/schema.sql"
+    schema_filename: str = "schema.sql"
 
 
 class TokenSettings(BaseModel):

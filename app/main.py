@@ -4,9 +4,9 @@ from contextlib import asynccontextmanager
 from starlette.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 
-from config import settings
+from app.config import settings
 from app.database.utils import DatabaseUtils
-from api_v1 import router as api_v1_router
+from app.api_v1 import router as api_v1_router
 
 
 @asynccontextmanager
