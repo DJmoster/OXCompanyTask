@@ -1,8 +1,8 @@
 from typing import Annotated
 from fastapi import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from sqlalchemy.ext.asyncio import AsyncSession
 from jwt.exceptions import InvalidTokenError
+from psycopg2.extras import RealDictCursor
 
 from app.database.database import db_helper
 
@@ -24,7 +24,7 @@ async def get_current_token_payload(
 
 
 async def get_current_auth_user(
-    cursor: Annotated[AsyncSession, Depends(db_helper.cursor_dependency)],
+    cursor: Annotated[RealDictCursor, Depends(db_helper.cursor_dependency)],
     payload: Annotated[dict, Depends(get_current_token_payload)],
 ) -> AuthSchema:
     if not (auth_id := payload.get("sub")):

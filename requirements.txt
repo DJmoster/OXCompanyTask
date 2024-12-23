@@ -19,7 +19,6 @@ fastapi==0.112.4
 fastapi-cli==0.0.7
 fastjsonschema==2.21.1
 filelock==3.16.1
-greenlet==3.1.1
 h11==0.14.0
 httpcore==1.0.7
 httptools==0.6.4
@@ -48,7 +47,7 @@ pluggy==1.5.0
 poetry==1.8.5
 poetry-core==1.9.1
 poetry-plugin-export==1.8.0
-psycopg2==2.9.10
+psycopg2-binary==2.9.10
 ptyprocess==0.7.0
 pydantic==2.10.4
 pydantic-extra-types==2.10.1
@@ -69,7 +68,6 @@ rich==13.9.4
 rich-toolkit==0.12.0
 shellingham==1.5.4
 sniffio==1.3.1
-SQLAlchemy==2.0.36
 starlette==0.38.6
 tomli==2.2.1
 tomlkit==0.13.2
